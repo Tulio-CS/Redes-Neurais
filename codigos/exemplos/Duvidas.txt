@@ -1,0 +1,18 @@
+1- 
+onehot encoder -> categorical_crossentropy
+label encoder -> sparse categorical_crossentropy
+
+Um é melhor do que o outro ?
+
+
+2- Modelo parou de aprender com um loss de 0.23 
+
+o que fazer
+
+3- MinMax e StandartScaler 
+
+tem diferença ?
+
+
+4- Batch size diminui o learning rate ?
+

@@ -19,7 +19,7 @@ y_valid = DataFrame.iloc[16:25,2].astype(float)
 X_test = DataFrame.iloc[25:41,0:2].astype(float)
 y_test = DataFrame.iloc[25:41,2].astype(float)
 
-seed = 13
+seed = 13 #galo doido/PT
 random.set_seed(seed)
 
 #Criando o modelo
@@ -53,12 +53,12 @@ for key,value in metrics.items():
 
 fig = plt.figure()
 
-ax1 = fig.add_subplot()
+ax1 = fig.add_subplot(121)
 ax1.plot(history.history["loss"],label = "Loss")
 ax1.plot(history.history["val_loss"],label = "Valid")
 ax1.legend(loc = "upper right")
 
-ax2 = fig.add_subplot()
+ax2 = fig.add_subplot(122)
 ax2.scatter(y_pred,y_test, color = "g")
 ax2.plot(y_test.values,y_test.values,"r")
 plt.show()
