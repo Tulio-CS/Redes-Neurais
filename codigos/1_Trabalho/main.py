@@ -4,7 +4,7 @@ import tensorflow as tf
 from keras import layers, models, callbacks
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.preprocessing import MinMaxScaler, LabelEncoder,StandardScaler
+from sklearn.preprocessing import LabelEncoder,StandardScaler
 from tkinter.filedialog import askopenfile
 import seaborn as sn
 
@@ -71,6 +71,8 @@ model_checkpoint_callback = callbacks.ModelCheckpoint(
     mode='max',
     save_best_only=True)
 
+
+#Treinamento
 history = model.fit(X_train, y_train, 
                     epochs=epocas, 
                     batch_size=10, 
@@ -81,10 +83,13 @@ history = model.fit(X_train, y_train,
 
 y_pred = model.predict(X_test)
 
-#metrics = {"MAE":mean_absolute_error(y_test,y_pred),"R2 SCORE":r2_score(y_test,y_pred)}
 
-#for key,value in metrics.items():
-#    print("{} = {}".format(key,value))
+#Avaliando a rede
+model.load_weights(checkpoint_filepath)
+
+model.evaluate(X_train, y_train)
+model.evaluate(X_valid, y_valid)
+model.evaluate(X_test, y_test)
 
 
 fig ,(ax1,ax2) = plt.subplots(2)
