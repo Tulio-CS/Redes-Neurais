@@ -8,9 +8,9 @@ from sklearn.preprocessing import LabelEncoder,StandardScaler
 from tkinter.filedialog import askopenfile
 import seaborn as sn
 
-path = "D:/GitHub/Redes-Neurais/codigos/1_Trabalho/dados_operacinais_acidentes.csv"
+path = "C:/Users/tulio/OneDrive/Documentos/GitHub/Redes-Neurais/codigos/1_Trabalho/dados_operacinais_acidentes.csv"
 seed = 10
-epocas = 300
+epocas = 500
 otimizador = "Adam"
 
 #Crir o dataframe
