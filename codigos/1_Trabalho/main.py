@@ -9,8 +9,8 @@ from tkinter.filedialog import askopenfile
 import seaborn as sn
 
 path = "D:/GitHub/Redes-Neurais/codigos/1_Trabalho/dados_operacinais_acidentes.csv"
-seed = 15
-epocas = 150
+seed = 10
+epocas = 300
 otimizador = "Adam"
 
 #Crir o dataframe
