@@ -1,3 +1,5 @@
+# Tulio Castro Silva
+
 
 #importar as bibliotecas
 import tensorflow as tf
@@ -7,9 +9,10 @@ import matplotlib.pyplot as plt
 from sklearn.preprocessing import LabelEncoder,StandardScaler
 from tkinter.filedialog import askopenfile
 import seaborn as sn
+from random import randint
 
-path = "D:/GitHub/Redes-Neurais/codigos/1_Trabalho/dados_operacinais_acidentes.csv"
-seed = 20
+path = "C:/Users/tulio/OneDrive/Documentos/GitHub/Redes-Neurais/codigos/1_Trabalho/dados_operacinais_acidentes.csv"
+seed = randint(0,100)
 epocas = 500
 otimizador = "Adam"
 
@@ -27,13 +30,14 @@ data_frame.iloc[:,0:13] = pd.DataFrame(scaler.fit_transform(data_frame.iloc[:,0:
 
 
 #Criando os valores de treino, teste e validacao 
-train = data_frame.sample(frac=0.8,random_state=seed)
-data_frame = data_frame.drop(train.index)
-valid = data_frame.sample(frac=0.5,random_state=seed)
-data_frame = data_frame.drop(valid.index)
-test = data_frame.sample(frac=1,random_state=seed)
 
-X_train = train.iloc[:,0:13]
+train = data_frame.sample(frac=0.8,random_state=seed)         #Separando 80% do data frame para o treino
+data_frame = data_frame.drop(train.index)                     #Removendo os valores de treino do data frame
+valid = data_frame.sample(frac=0.5,random_state=seed)         #Separando 50% dos valores para a validacao
+data_frame = data_frame.drop(valid.index)                     #Removendo os valores de validacao do data frame
+test = data_frame.sample(frac=1,random_state=seed)            #Separando o resto dos valores para o teste
+
+X_train = train.iloc[:,0:13]                 
 y_train = train.iloc[:,14]
 X_valid = valid.iloc[:,0:13]
 y_valid = valid.iloc[:,14]
@@ -50,9 +54,8 @@ model = models.Sequential()
 model.add(layers.Dense(13,activation="relu",input_dim = 13))
 
 model.add(layers.Dense(26,activation="relu"))
-model.add(layers.Dense(52,activation="relu"))
-model.add(layers.Dense(52,activation="relu"))
-
+model.add(layers.Dense(22,activation="relu"))
+model.add(layers.Dense(18,activation="relu"))
 
 model.add(layers.Dense(9,activation="softmax"))
 
@@ -75,7 +78,7 @@ model_checkpoint_callback = callbacks.ModelCheckpoint(
 #Treinamento
 history = model.fit(X_train, y_train, 
                     epochs=epocas, 
-                    batch_size=10, 
+                    batch_size=20, 
                     validation_data=(X_valid, y_valid), 
                     shuffle=True, 
                     callbacks=[model_checkpoint_callback],
@@ -91,17 +94,21 @@ model.evaluate(X_train, y_train)
 model.evaluate(X_valid, y_valid)
 model.evaluate(X_test, y_test)
 
-
+#Criando os graficos
 fig ,(ax1,ax2) = plt.subplots(2)
 
+#Grafico de loss e val_loss
 ax1.plot(history.history["loss"],label = "Loss")
 ax1.plot(history.history["val_loss"],label = "Valid")
 ax1.legend(loc = "upper right")
 
+#Grafico de acuracia 
 ax2.plot(history.history["accuracy"],label = "train")
 ax2.plot(history.history["val_accuracy"],label = "Valid")
 ax2.legend(loc = "upper right")
 
+
+#Heatmap da matriz de confusao
 y_pred_labels = [i.argmax() for i in y_pred]
 
 cm = tf.math.confusion_matrix(labels=y_test, predictions=y_pred_labels)
