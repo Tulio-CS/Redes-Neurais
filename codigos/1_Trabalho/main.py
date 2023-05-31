@@ -9,9 +9,10 @@ import matplotlib.pyplot as plt
 from sklearn.preprocessing import LabelEncoder,StandardScaler
 from tkinter.filedialog import askopenfile
 import seaborn as sn
+from random import randint
 
 path = "C:/Users/tulio/OneDrive/Documentos/GitHub/Redes-Neurais/codigos/1_Trabalho/dados_operacinais_acidentes.csv"
-seed = 11
+seed = randint(0,100)
 epocas = 500
 otimizador = "Adam"
 
@@ -53,9 +54,8 @@ model = models.Sequential()
 model.add(layers.Dense(13,activation="relu",input_dim = 13))
 
 model.add(layers.Dense(26,activation="relu"))
-model.add(layers.Dense(52,activation="relu"))
-model.add(layers.Dense(52,activation="relu"))
-
+model.add(layers.Dense(22,activation="relu"))
+model.add(layers.Dense(18,activation="relu"))
 
 model.add(layers.Dense(9,activation="softmax"))
 
@@ -78,7 +78,7 @@ model_checkpoint_callback = callbacks.ModelCheckpoint(
 #Treinamento
 history = model.fit(X_train, y_train, 
                     epochs=epocas, 
-                    batch_size=10, 
+                    batch_size=20, 
                     validation_data=(X_valid, y_valid), 
                     shuffle=True, 
                     callbacks=[model_checkpoint_callback],
