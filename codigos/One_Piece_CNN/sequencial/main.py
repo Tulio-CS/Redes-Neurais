@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from keras.models import Sequential
 from keras import layers, callbacks
 
-path = "D:/GitHub/Redes-Neurais/codigos/One_Piece_CNN/Data/"
+path = "D:/GitHub/OPCNN/Data/"
 
 height = 224
 width = 224
@@ -78,9 +78,9 @@ model.add(layers.Dense(10, activation='softmax'))
 
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
-model.save("D:/GitHub/Redes-Neurais/codigos/One_Piece_CNN/sequencial/working/Model.h5")
+model.save("D:/GitHub/OPCNN/sequencial/Model.h5")
 
-checkpoint_filepath = 'D:/GitHub/Redes-Neurais/codigos/One_Piece_CNN/sequencial/workingcp.ckpt'
+checkpoint_filepath = 'D:/GitHub/OPCNN/sequencial/workingcp.ckpt'
 
 model_checkpoint_callback = callbacks.ModelCheckpoint(
     filepath=checkpoint_filepath,
@@ -98,7 +98,7 @@ history = model.fit(
 
 model.load_weights(checkpoint_filepath)
 
-model.save_weights("D:/GitHub/Redes-Neurais/codigos/One_Piece_CNN/sequencial/working/ModelWeights.h5")
+model.save_weights("D:/GitHub/OPCNN/sequencial/ModelWeights.h5")
 
 
 model.evaluate(train_ds)

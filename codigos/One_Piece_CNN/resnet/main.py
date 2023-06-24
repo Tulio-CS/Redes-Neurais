@@ -15,7 +15,7 @@ batch = 32          #Tamanho do batch
 epocas = 50         #Numero de epocas
 
 
-path = "D:/GitHub/Redes-Neurais/codigos/One_Piece_CNN/Data/"   #Caminho para o diretorio com as imagens 
+path = "D:/GitHub/OPCNN/Data/"   #Caminho para o diretorio com as imagens 
 
 
 #Criando os datasets
@@ -70,7 +70,7 @@ x = tfl.Dropout(0.2)(x)
 dl1 = tfl.Dense(64, activation='relu')(x)
 x = tfl.Dropout(0.2)(x)
 dl2 = tfl.Dense(32, activation='relu')(dl1)
-output = tfl.Dense(18, activation='softmax')(dl2)
+output = tfl.Dense(10, activation='softmax')(dl2)
 
 model = Model(inputs=[modelo_base.input], outputs=[output])
 
@@ -81,7 +81,7 @@ model.compile(optimizer='adam',
 #model.summary()
 
 #Criando o checkpoint, para salvar os melhores pesos
-callback = tfc.ModelCheckpoint("D:/GitHub/Redes-Neurais/codigos/One_Piece_CNN/resnet/working/best.h5",save_best_only=True)
+callback = tfc.ModelCheckpoint("D:/GitHub/OPCNN/resnet/best.h5",save_best_only=True)
 
 #Criando uma condicao para que a rede pare de treinar se nao houver melhoras, ajuda a evitar overfitting
 early_stopping_callback = tfc.EarlyStopping(patience=5,restore_best_weights=True)         
@@ -90,13 +90,13 @@ early_stopping_callback = tfc.EarlyStopping(patience=5,restore_best_weights=True
 history = model.fit(train_ds,validation_data=val_ds,epochs=epocas,callbacks=[early_stopping_callback, callback])
 
 #Carregando os melhores pesos
-model.load_weights("D:/GitHub/Redes-Neurais/codigos/One_Piece_CNN/resnet/working/best.h5")
+model.load_weights("D:/GitHub/OPCNN/resnet/best.h5")
 
 #Salvando o modelo
-model.save("D:/GitHub/Redes-Neurais/codigos/One_Piece_CNN/resnet/working/Model.h5")
+model.save("D:/GitHub/OPCNN/resnet/Model.h5")
 
 #Salvando os pesos
-model.save_weights("D:/GitHub/Redes-Neurais/codigos/One_Piece_CNN/resnet/working/ModelWeights.h5")
+model.save_weights("D:/GitHub/OPCNN/resnet/ModelWeights.h5")
 
 #Plotando o grafico de acuracia
 plt.plot(history.history['accuracy'],color='red',label='training accuracy')
