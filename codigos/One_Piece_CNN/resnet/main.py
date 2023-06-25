@@ -15,7 +15,7 @@ batch = 32          #Tamanho do batch
 epocas = 50         #Numero de epocas
 
 
-path = "D:/GitHub/OPCNN/Data/"   #Caminho para o diretorio com as imagens 
+path = "D:/GitHub/OPCNN/10_classes/"   #Caminho para o diretorio com as imagens 
 
 
 #Criando os datasets
@@ -67,10 +67,8 @@ for layer in modelo_base.layers:
 x = modelo_base.output 
 x = tfl.Flatten()(x)
 x = tfl.Dropout(0.2)(x)
-dl1 = tfl.Dense(64, activation='relu')(x)
-x = tfl.Dropout(0.2)(x)
-dl2 = tfl.Dense(32, activation='relu')(dl1)
-output = tfl.Dense(10, activation='softmax')(dl2)
+dl1 = tfl.Dense(512, activation='relu')(x)
+output = tfl.Dense(10, activation='softmax')(dl1)
 
 model = Model(inputs=[modelo_base.input], outputs=[output])
 

@@ -10,13 +10,13 @@ height = 224
 width = 224
 batch = 32
 
-path = "D:/GitHub/OPCNN//test/"
+path = "D:/GitHub/OPCNN//10_classes/"
 
 #Carregando o modelo
-model = load_model("D:/GitHub/OPCNN/resnet/Model.h5")
+model = load_model("D:/GitHub/OPCNN/resnet/10_classes/Model.h5")
 
 #Carregando os pesos
-model.load_weights("D:/GitHub/OPCNN/resnet/ModelWeights.h5")
+model.load_weights("D:/GitHub/OPCNN/resnet/10_classes/ModelWeights.h5")
 
 
 #Criando o dataset
@@ -32,6 +32,8 @@ pred_ds = tf.keras.utils.image_dataset_from_directory(
 
 #Realizando o predict no dataset
 y_pred = model.predict(pred_ds)
+
+model.evaluate(pred_ds)
 
 #Criando a matriz de confusão
 predictions = np.argmax(y_pred,axis=1)

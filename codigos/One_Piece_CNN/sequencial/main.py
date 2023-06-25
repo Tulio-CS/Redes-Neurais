@@ -3,15 +3,16 @@
 import tensorflow as tf
 import matplotlib.pyplot as plt
 from keras.models import Sequential
-from keras import layers, callbacks
+from keras import layers
+import keras.callbacks as tfc
 
-path = "D:/GitHub/OPCNN/Data/"
+path = "D:/GitHub/OPCNN/10_classes/"
 
 height = 224
 width = 224
 batch = 32
-epocas = 20
-seed = 25
+epocas = 50
+seed = 13
 
 train_ds = tf.keras.utils.image_dataset_from_directory(
     path,
@@ -57,6 +58,10 @@ model.add(layers.Conv2D(filters=32, kernel_size=(3, 3), activation='relu', input
 model.add(layers.MaxPooling2D((2, 2)))
 model.add(layers.BatchNormalization())
 
+model.add(layers.Conv2D(32, (3, 3), activation='relu'))
+model.add(layers.MaxPooling2D((2, 2)))
+model.add(layers.BatchNormalization())
+
 model.add(layers.Conv2D(64, (3, 3), activation='relu'))
 model.add(layers.MaxPooling2D((2, 2)))
 model.add(layers.BatchNormalization())
@@ -65,7 +70,7 @@ model.add(layers.Conv2D(128, (3, 3), activation='relu'))
 model.add(layers.MaxPooling2D((2, 2)))
 model.add(layers.BatchNormalization())
 
-model.add(layers.Conv2D(128, (3, 3), activation='relu'))
+model.add(layers.Conv2D(256, (3, 3), activation='relu'))
 model.add(layers.MaxPooling2D((2, 2)))
 model.add(layers.BatchNormalization())
 
@@ -74,35 +79,31 @@ model.add(layers.Flatten())
 model.add(layers.Dense(512, activation='relu'))
 model.add(layers.Dropout(0.5))
 
+model.add(layers.Dense(256, activation='relu'))
+model.add(layers.Dropout(0.5))
+
 model.add(layers.Dense(10, activation='softmax'))
 
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
 model.save("D:/GitHub/OPCNN/sequencial/Model.h5")
 
-checkpoint_filepath = 'D:/GitHub/OPCNN/sequencial/workingcp.ckpt'
 
-model_checkpoint_callback = callbacks.ModelCheckpoint(
-    filepath=checkpoint_filepath,
-    save_weights_only=True,
-    monitor='val_accuracy',
-    mode='max',
-    save_best_only=True)
+callback = tfc.ModelCheckpoint("D:/GitHub/OPCNN/sequencial/best.h5",save_best_only=True)
+early_stopping_callback = tfc.EarlyStopping(patience=5,restore_best_weights=True)  
 
 history = model.fit(
     train_ds,
     validation_data=val_ds,
     epochs=epocas,
     batch_size=batch,
-    callbacks=[model_checkpoint_callback])
+    callbacks=[early_stopping_callback, callback])
 
-model.load_weights(checkpoint_filepath)
+model.load_weights("D:/GitHub/OPCNN/sequencial/best.h5")
 
 model.save_weights("D:/GitHub/OPCNN/sequencial/ModelWeights.h5")
 
 
-model.evaluate(train_ds)
-model.evaluate(val_ds)
 
 fig ,(ax1,ax2) = plt.subplots(2)
 
