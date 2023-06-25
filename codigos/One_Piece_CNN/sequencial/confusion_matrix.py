@@ -31,6 +31,7 @@ pred_ds = tf.keras.utils.image_dataset_from_directory(
 
 #Realizando o predict no dataset
 y_pred = model.predict(pred_ds)
+model.evaluate(pred_ds)
 
 
 #model.evaluate(pred_ds)
@@ -39,11 +40,6 @@ y_pred = model.predict(pred_ds)
 predictions = np.argmax(y_pred,axis=1)
 
 truth = np.argmax(np.concatenate([y for x, y in pred_ds], axis=0),axis=1)
-
-print(predictions)
-print("\n\n")
-print(truth)
-
 
 cm = tf.math.confusion_matrix(labels=truth, predictions=predictions)
 
