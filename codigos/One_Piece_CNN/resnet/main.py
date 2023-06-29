@@ -13,7 +13,7 @@ chanels = 3         #Numero de canais da imagem
 seed = 13           #Seed aleatoria
 batch = 32          #Tamanho do batch
 epocas = 50         #Numero de epocas
-#Teste
+
 
 path = "D:/GitHub/OPCNN/10_classes/"   #Caminho para o diretorio com as imagens 
 
