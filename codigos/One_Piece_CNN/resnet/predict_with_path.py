@@ -15,15 +15,16 @@ width = 224
 batch = 32
 epocas = 20
 seed = 1313
+model_path = "D:/GitHub/OPCNN/resnet/"         #Caminho do modelo
 
 path = askopenfilename()  #Escolhendo a imagem a ser predita
 
 
 #Carrregando o modelo
-model = load_model("E:/OPCNN/ResNet/Model.h5")
+model = load_model(model_path+"Model.h5")
 
 #Carregando os pesos
-model.load_weights("E:/OPCNN/ResNet/ModelWeights.h5")
+model.load_weights(model_path+"ModelWeights.h5")
 
 #Carregando a imagem
 image = tf.keras.utils.load_img(

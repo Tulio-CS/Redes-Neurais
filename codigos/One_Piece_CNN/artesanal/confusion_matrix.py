@@ -5,23 +5,23 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 #Variaveis
-seed = 13
 height = 224
 width = 224
 batch = 32
 
-path = "D:/GitHub/OPCNN//10_classes/"
+data_path = "D:/GitHub/OPCNN//10_classes/"     #Caminho do dataset
+model_path = "D:/GitHub/OPCNN/artesanal/"      #Caminho do modelo
 
 #Carregando o modelo
-model = load_model("D:/GitHub/OPCNN/sequencial/Model.h5")
+model = load_model(model_path+"Model.h5")
 
 #Carregando os pesos
-model.load_weights("D:/GitHub/OPCNN/sequencial/ModelWeights.h5")
+model.load_weights(model_path+"ModelWeights.h5")
 
 
 #Criando o dataset
 pred_ds = tf.keras.utils.image_dataset_from_directory(
-    path,
+    data_path,
     image_size=(height,width),
     batch_size= batch,
     label_mode="categorical",
@@ -32,9 +32,6 @@ pred_ds = tf.keras.utils.image_dataset_from_directory(
 #Realizando o predict no dataset
 y_pred = model.predict(pred_ds)
 model.evaluate(pred_ds)
-
-
-#model.evaluate(pred_ds)
 
 #Criando a matriz de confusão
 predictions = np.argmax(y_pred,axis=1)

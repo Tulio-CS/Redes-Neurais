@@ -8,7 +8,8 @@ import keras.callbacks as tfc
 
 #Variaveis
 
-path = "D:/GitHub/OPCNN/10_classes/"     #Caminho com o dataset
+data_path = "D:/GitHub/OPCNN/10_classes/"    #Caminho com o dataset
+save_path = "D:/GitHub/OPCNN/artesanal/"     #Caminho onde serao salvos os arquivos gerados
 
 height = 224          #Altura da imagem
 width = 224           #Largura da imagem
@@ -20,7 +21,7 @@ seed = 13             #Seed aleatoria
 
 #Dataset para o treinamento
 train_ds = tf.keras.utils.image_dataset_from_directory(
-    path,
+    data_path,
     validation_split=0.2,
     subset="training",
     seed=seed,
@@ -32,7 +33,7 @@ train_ds = tf.keras.utils.image_dataset_from_directory(
 
 #Dataset para a validação
 val_ds = tf.keras.utils.image_dataset_from_directory(
-    path,
+    data_path,
     validation_split=0.2,
     subset="validation",
     seed=seed,
@@ -74,15 +75,15 @@ model.add(layers.Dropout(0.5))
 model.add(layers.Dense(256, activation='relu'))
 model.add(layers.Dropout(0.5))
 
-model.add(layers.Dense(10, activation='softmax'))
+model.add(layers.Dense(len(class_names), activation='softmax'))
 
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
 #Salvando o modelo
-model.save("D:/GitHub/OPCNN/sequencial/Model.h5")
+model.save(save_path+"Model.h5")
 
 #Criando o checkpoint, para salvar os melhores pesos
-callback = tfc.ModelCheckpoint("D:/GitHub/OPCNN/sequencial/best.h5",save_best_only=True)
+callback = tfc.ModelCheckpoint(save_path+"best.h5",save_best_only=True)
 
 #Criando uma condicao para que a rede pare de treinar se nao houver melhoras, ajuda a evitar overfitting
 early_stopping_callback = tfc.EarlyStopping(patience=5,restore_best_weights=True)  
@@ -96,10 +97,10 @@ history = model.fit(
     callbacks=[early_stopping_callback, callback])
 
 #Carregando os melhores pesos
-model.load_weights("D:/GitHub/OPCNN/sequencial/best.h5")
+model.load_weights(save_path+"best.h5")
 
 #Salvando os pesos
-model.save_weights("D:/GitHub/OPCNN/sequencial/ModelWeights.h5")
+model.save_weights(save_path+"ModelWeights.h5")
 
 
 #Plotando o grafico de acuracia e loss

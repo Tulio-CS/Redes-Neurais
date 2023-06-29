@@ -5,27 +5,27 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 #Variaveis
+data_path = "D:/GitHub/OPCNN//10_classes/"     #Caminho do dataset
+model_path = "D:/GitHub/OPCNN/resnet/"         #Caminho do modelo
 seed = 13
 height = 224
 width = 224
 batch = 32
 
-path = "D:/GitHub/OPCNN//10_classes/"
 
 #Carregando o modelo
-model = load_model("D:/GitHub/OPCNN/resnet/10_classes/Model.h5")
+model = load_model(model_path+"Model.h5")
 
 #Carregando os pesos
-model.load_weights("D:/GitHub/OPCNN/resnet/10_classes/ModelWeights.h5")
+model.load_weights(model_path+"ModelWeights.h5")
 
 
 #Criando o dataset
 pred_ds = tf.keras.utils.image_dataset_from_directory(
-    path,
+    data_path,
     image_size=(height,width),
     batch_size= batch,
     label_mode="int",
-    labels= "inferred",
     color_mode="rgb",
     shuffle=False
 )

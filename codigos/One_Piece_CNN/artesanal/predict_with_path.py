@@ -6,9 +6,9 @@ from keras import layers
 from tkinter.filedialog import askopenfilename
 from PIL import Image
 import numpy as np
-"""D:/GitHub/Redes-Neurais/codigos/One_Piece_CNN/archive/Data/Data/Nami/1.png"""
-path = askopenfilename()
 
+path = askopenfilename()
+model_path = "D:/GitHub/OPCNN/artesanal/"
 
 height = 224
 width = 224
@@ -17,10 +17,10 @@ epocas = 20
 seed = 13
 
 #Carregando o modelo
-model = load_model("E:/OPCNN/sequencial/Model.h5")
+model = load_model(model_path+"Model.h5")
 
 #Carregando os pesos do modelo
-model.load_weights("E:/OPCNN/sequencial/ModelWeights.h5")
+model.load_weights(model_path+"ModelWeights.h5")
 
 #Carregando a imagem
 image = tf.keras.utils.load_img(
