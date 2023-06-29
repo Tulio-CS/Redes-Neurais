@@ -20,10 +20,10 @@ path = askopenfilename()  #Escolhendo a imagem a ser predita
 
 
 #Carrregando o modelo
-model = load_model("D:/GitHub/OPCNN/resnet/Model.h5")
+model = load_model("E:/OPCNN/ResNet/Model.h5")
 
 #Carregando os pesos
-model.load_weights("D:/GitHub/OPCNN/resnet/ModelWeights.h5")
+model.load_weights("E:/OPCNN/ResNet/ModelWeights.h5")
 
 #Carregando a imagem
 image = tf.keras.utils.load_img(
@@ -49,7 +49,7 @@ labels = {0:"Brook",
 
 #Realizando o predict
 pred = model.predict(input_arr)
-print(pred.argmax())
+print(pred)
 
 #Plotando a imagem com o label predito
 plt.imshow(image)

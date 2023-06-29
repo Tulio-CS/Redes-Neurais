@@ -17,10 +17,10 @@ epocas = 20
 seed = 13
 
 #Carregando o modelo
-model = load_model("D:/GitHub/OPCNN/sequencial/Model.h5")
+model = load_model("E:/OPCNN/sequencial/Model.h5")
 
 #Carregando os pesos do modelo
-model.load_weights("D:/GitHub/OPCNN/sequencial/ModelWeights.h5")
+model.load_weights("E:/OPCNN/sequencial/ModelWeights.h5")
 
 #Carregando a imagem
 image = tf.keras.utils.load_img(
@@ -46,7 +46,8 @@ labels = {0:"Brook",
 
 #Predict e plotagem da imagem
 pred = model.predict(input_arr)
-print(pred.argmax())
+print(pred)
+#print(pred.argmax())
 plt.imshow(image)
 plt.title(labels[pred.argmax()])
 plt.show()
