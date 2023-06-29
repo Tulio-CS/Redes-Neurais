@@ -20,7 +20,7 @@ path = "D:/GitHub/OPCNN/10_classes/"   #Caminho para o diretorio com as imagens
 
 #Criando os datasets
 
-#Data set para o treinamento
+#Dataset para o treinamento
 train_ds = tf.keras.utils.image_dataset_from_directory(
 
     path,                                    #Caminnho para o diretorio com as imagens

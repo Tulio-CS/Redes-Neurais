@@ -6,14 +6,19 @@ from keras.models import Sequential
 from keras import layers
 import keras.callbacks as tfc
 
-path = "D:/GitHub/OPCNN/10_classes/"
+#Variaveis
 
-height = 224
-width = 224
-batch = 32
-epocas = 50
-seed = 13
+path = "D:/GitHub/OPCNN/10_classes/"     #Caminho com o dataset
 
+height = 224          #Altura da imagem
+width = 224           #Largura da imagem
+batch = 32            #Tamanho do batch
+epocas = 50           #Numero de epocas
+seed = 13             #Seed aleatoria
+
+#Criando os datasets
+
+#Dataset para o treinamento
 train_ds = tf.keras.utils.image_dataset_from_directory(
     path,
     validation_split=0.2,
@@ -25,6 +30,7 @@ train_ds = tf.keras.utils.image_dataset_from_directory(
     color_mode="rgb"
 )
 
+#Dataset para a validação
 val_ds = tf.keras.utils.image_dataset_from_directory(
     path,
     validation_split=0.2,
@@ -36,23 +42,9 @@ val_ds = tf.keras.utils.image_dataset_from_directory(
     color_mode="rgb"
 )
 
-class_names = train_ds.class_names
+class_names = train_ds.class_names          #Nomes das classes
 
-print(class_names)
-
-"""
-plt.figure(figsize=(10,10))
-
-for images,labels in train_ds.take(1):
-    for i in range(9):
-        ax = plt.subplot(3,3,i+1)      
-        plt.imshow(images[i]/255)
-        plt.title (class_names[labels[i]])
-        plt.axis("off")
-        break
-    plt.show()
-"""
-
+#Criando o modelo da rede
 model = Sequential()
 model.add(layers.Conv2D(filters=32, kernel_size=(3, 3), activation='relu', input_shape=(height, width, 3)))
 model.add(layers.MaxPooling2D((2, 2)))
@@ -86,12 +78,16 @@ model.add(layers.Dense(10, activation='softmax'))
 
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
+#Salvando o modelo
 model.save("D:/GitHub/OPCNN/sequencial/Model.h5")
 
-
+#Criando o checkpoint, para salvar os melhores pesos
 callback = tfc.ModelCheckpoint("D:/GitHub/OPCNN/sequencial/best.h5",save_best_only=True)
+
+#Criando uma condicao para que a rede pare de treinar se nao houver melhoras, ajuda a evitar overfitting
 early_stopping_callback = tfc.EarlyStopping(patience=5,restore_best_weights=True)  
 
+#Treinando o modelo
 history = model.fit(
     train_ds,
     validation_data=val_ds,
@@ -99,12 +95,14 @@ history = model.fit(
     batch_size=batch,
     callbacks=[early_stopping_callback, callback])
 
+#Carregando os melhores pesos
 model.load_weights("D:/GitHub/OPCNN/sequencial/best.h5")
 
+#Salvando os pesos
 model.save_weights("D:/GitHub/OPCNN/sequencial/ModelWeights.h5")
 
 
-
+#Plotando o grafico de acuracia e loss
 fig ,(ax1,ax2) = plt.subplots(2)
 
 ax1.plot(history.history["loss"],label = "Loss")

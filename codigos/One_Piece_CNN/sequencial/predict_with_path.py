@@ -16,20 +16,19 @@ batch = 32
 epocas = 20
 seed = 13
 
+#Carregando o modelo
 model = load_model("D:/GitHub/OPCNN/sequencial/Model.h5")
+
+#Carregando os pesos do modelo
 model.load_weights("D:/GitHub/OPCNN/sequencial/ModelWeights.h5")
 
-"""   
-image = Image.open(path)
-image = image.resize((224,224))
-image = numpy.array(image)
-"""
-
+#Carregando a imagem
 image = tf.keras.utils.load_img(
     path,
     target_size=(224,224)
 )
 
+#Convertendo a imagem em uma matriz
 input_arr = tf.keras.utils.img_to_array(image)
 input_arr = np.array([input_arr])  # Convert single image to a batch.
 
@@ -45,6 +44,7 @@ labels = {0:"Brook",
           9:"Zoro"
           }
 
+#Predict e plotagem da imagem
 pred = model.predict(input_arr)
 print(pred.argmax())
 plt.imshow(image)

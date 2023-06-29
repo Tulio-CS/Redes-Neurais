@@ -46,26 +46,7 @@ labels = {0:"Brook",
           8:"Usopp",
           9:"Zoro"
           }
-"""
-labels = {1:"Akainu",
-          2:"Brook",
-          3:"Chopper",
-          4:"Crocodile",
-          5:"Franky",
-          6:"Jinbei",
-          7:"Kurohige",
-          8:"Law",
-          9:"Luffy",
-          10:"Mihawk",
-          11:"Nami",
-          12:"Rayleigh",
-          13:"Robin",
-          14:"Sanji",
-          15:"Shanks",
-          16:"Usopp",
-          17:"Zoro"
-          }
-"""
+
 #Realizando o predict
 pred = model.predict(input_arr)
 print(pred.argmax())
